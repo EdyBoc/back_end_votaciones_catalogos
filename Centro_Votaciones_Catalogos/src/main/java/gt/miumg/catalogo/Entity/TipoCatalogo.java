@@ -27,7 +27,7 @@ import org.springframework.data.jpa.repository.Temporal;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "TipoCatalogo", schema = "votaciones")
+@Table(name = "TipoCatalogo", schema = "public")
 public class TipoCatalogo {
 
     @Id

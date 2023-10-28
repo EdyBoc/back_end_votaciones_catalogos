@@ -18,26 +18,26 @@ import org.springframework.data.repository.CrudRepository;
 public interface CatalogosRepository extends CrudRepository<Catalogo, Object> {
 
     //obtiene los departamentos
-    @Query(value = "select ca.idcatalogo Id, ca.codigo, Descripcion from votaciones.catalogo ca\n"
+    @Query(value = "select ca.idcatalogo Id, ca.codigo, Descripcion from public.catalogo ca\n"
             + "where ca.idtipocatalogo = '1'",
             nativeQuery = true)
     public List<CatalogosProjection> findDepartamentos();
 
 
 //obtiene los municipios de un departmanto
-    @Query(value = "select ca.idcatalogo Id, ca.codigo, Descripcion from votaciones.catalogo ca\n"
+    @Query(value = "select ca.idcatalogo Id, ca.codigo, Descripcion from public.catalogo ca\n"
             + "where ca.departamento = CAST(? AS integer)",
             nativeQuery = true)
     public List<CatalogosProjection> findMunicipiosByDepartemento(String departamento);
 
 //obtiene los tipos de candidatos
-    @Query(value = "select ca.idcatalogo Id, ca.codigo, Descripcion from votaciones.catalogo ca\n"
+    @Query(value = "select ca.idcatalogo Id, ca.codigo, Descripcion from public.catalogo ca\n"
             + "where ca.idtipocatalogo = '3'",
             nativeQuery = true)
     public List<CatalogosProjection> findTiposCandidatos();
 
 //obtiene los partidos
-    @Query(value = "select ca.idcatalogo Id, ca.codigo, Descripcion from votaciones.catalogo ca\n"
+    @Query(value = "select ca.idcatalogo Id, ca.codigo, Descripcion from public.catalogo ca\n"
             + "where ca.idTipoCatalogo = '4'",
             nativeQuery = true)
     public List<CatalogosProjection> findPartidos();
@@ -53,12 +53,12 @@ public interface CatalogosRepository extends CrudRepository<Catalogo, Object> {
             + "        ca.edad ,\n"
             + "        ca.ideologia  \n"
             + "FROM\n"
-            + "        votaciones.catalogo AS ca \n"
+            + "        public.catalogo AS ca \n"
             + "INNER JOIN\n"
-            + "        votaciones.catalogo tipo \n"
+            + "        public.catalogo tipo \n"
             + "ON tipo.idcatalogo = ca.tipocandidato --para el tipo candidato \n"
             + "INNER JOIN\n"
-            + "        votaciones.catalogo partido \n"
+            + "        public.catalogo partido \n"
             + "ON partido.idcatalogo = ca.partidopolítico  --para el partido  \n"
             + "WHERE\n"
             + "        ca.tipocandidato IN (357, 358) ;", nativeQuery = true)
@@ -79,27 +79,27 @@ public interface CatalogosRepository extends CrudRepository<Catalogo, Object> {
             + "        ca.edad,\n"
             + "        ca.ideologia \n"
             + "    FROM\n"
-            + "        votaciones.catalogo AS ca \n"
+            + "        public.catalogo AS ca \n"
             + "    INNER JOIN\n"
-            + "        votaciones.catalogo tipo \n"
+            + "        public.catalogo tipo \n"
             + "            ON tipo.idcatalogo = ca.tipocandidato \n"
             + "    left JOIN\n"
-            + "        votaciones.catalogo partido \n"
+            + "        public.catalogo partido \n"
             + "            ON partido.idcatalogo = ca.partidopolítico \n"
             + "    LEFT JOIN\n"
-            + "        votaciones.catalogo mun \n"
+            + "        public.catalogo mun \n"
             + "            ON mun.idcatalogo = ca.municipio \n"
             + "    LEFT JOIN\n"
-            + "        votaciones.catalogo dep \n"
+            + "        public.catalogo dep \n"
             + "            ON dep.idcatalogo = ca.municipio \n"
             + "    WHERE\n"
             + "        ca.idcatalogo IN (\n"
             + "            SELECT\n"
             + "                DISTINCT ca.idcatalogo         \n"
             + "            FROM\n"
-            + "                votaciones.catalogo AS ca         \n"
+            + "                public.catalogo AS ca         \n"
             + "            INNER JOIN\n"
-            + "                votaciones.catalogo cata \n"
+            + "                public.catalogo cata \n"
             + "                    ON cata.idcatalogo = ca.partidopolítico         \n"
             + "            WHERE\n"
             + "                tipo.idcatalogo = 359         \n"
@@ -121,15 +121,15 @@ public interface CatalogosRepository extends CrudRepository<Catalogo, Object> {
             + "    ca.edad ,\n"
             + "    ca.ideologia  \n"
             + "FROM\n"
-            + "    votaciones.catalogo AS ca \n"
+            + "    public.catalogo AS ca \n"
             + "INNER JOIN\n"
-            + "    votaciones.catalogo cat --para el tipo candidato \n"
+            + "    public.catalogo cat --para el tipo candidato \n"
             + "    ON cat.idcatalogo = ca.tipocandidato \n"
             + "INNER JOIN\n"
-            + "    votaciones.catalogo cata --para el partido  \n"
+            + "    public.catalogo cata --para el partido  \n"
             + "    ON cata.idcatalogo = ca.partidopolítico  \n"
             + "LEFT JOIN\n"
-            + "    votaciones.catalogo dep --para el departamento  \n"
+            + "    public.catalogo dep --para el departamento  \n"
             + "    ON dep.idcatalogo = ca.departamento  \n"
             + "WHERE\n"
             + "    cat.idcatalogo IN (361) \n"
